@@ -1,0 +1,127 @@
+Feedforward neural network
+--------------------------
+Tim Nugent 2014
+
+Three layers (one hidden). Training is via backpropagation and stochastic gradient descent. Uses a sigmoidal activation function. 
+
+Build
+-----
+
+Compile with 'make' or:
+
+g++ -O3 --std=c++11 -Wall -Wextra src/main.cpp src/neuralnet.cpp src/trainer.cpp -o bin/nn
+
+Run
+---
+
+Run with 'make test', or:
+
+bin/nn
+
+This will train and test the network using the (scaled) iris dataset in data/. Training file is 120 rows, testing is 30 rows.
+
+https://archive.ics.uci.edu/ml/datasets/Iris
+
+Sample output
+-------------
+
+bin/nn
+Training:
+100 epochs : MSE = 0.1449 Accuracy = 0.000 %
+200 epochs : MSE = 0.1129 Accuracy = 0.000 %
+300 epochs : MSE = 0.1018 Accuracy = 0.000 %
+400 epochs : MSE = 0.0941 Accuracy = 0.000 %
+500 epochs : MSE = 0.0871 Accuracy = 0.000 %
+600 epochs : MSE = 0.0807 Accuracy = 0.000 %
+700 epochs : MSE = 0.0752 Accuracy = 0.000 %
+800 epochs : MSE = 0.0704 Accuracy = 0.000 %
+900 epochs : MSE = 0.0662 Accuracy = 0.000 %
+1000 epochs : MSE = 0.0625 Accuracy = 0.000 %
+1100 epochs : MSE = 0.0592 Accuracy = 0.000 %
+1200 epochs : MSE = 0.0563 Accuracy = 0.833 %
+1300 epochs : MSE = 0.0538 Accuracy = 1.667 %
+1400 epochs : MSE = 0.0517 Accuracy = 3.333 %
+1500 epochs : MSE = 0.0500 Accuracy = 5.833 %
+1600 epochs : MSE = 0.0484 Accuracy = 7.500 %
+1700 epochs : MSE = 0.0471 Accuracy = 10.833 %
+1800 epochs : MSE = 0.0460 Accuracy = 10.833 %
+1900 epochs : MSE = 0.0450 Accuracy = 10.833 %
+2000 epochs : MSE = 0.0441 Accuracy = 11.667 %
+.....
+98700 epochs : MSE = 0.0123 Accuracy = 81.667 %
+98800 epochs : MSE = 0.0122 Accuracy = 81.667 %
+98900 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99000 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99100 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99200 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99300 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99400 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99500 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99600 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99700 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99800 epochs : MSE = 0.0122 Accuracy = 81.667 %
+99900 epochs : MSE = 0.0122 Accuracy = 81.667 %
+100000 epochs : MSE = 0.0122 Accuracy = 81.667 %
+Training complete.
+Testing:
+MSE = 0.0265 Accuracy = 90.000 %
+Testing complete.
+Wrote data/iris_weights.out
+
+How to use
+----------
+
+See src/main.cpp:
+
+	// Initialize network
+	// with 4 inputs, 1 hidden layer with 9 neurons, and 3 outputs
+	neuralnet* N = new neuralnet(4,9,3);
+
+	// Setup trainer
+	trainer* T = new trainer(N);
+	// Set learning rate
+	T->set_learning_rate(0.001);
+	// Set momentum
+	T->set_momentum(0.9);
+	// Set maximum epochs
+	T->set_max_epochs(100000);
+	T->load_training_data("data/iris.scale.train.csv");
+
+	delete T;
+	delete N;
+
+
+The training/test file format is CSV, with (in this case) the first 4 values being the input features, and the last three are the output values:
+
+# class 1
+-0.388889,0.416667,-0.830508,-0.916667,1,0,0
+# class 2
+0.333333,-0.0833334,0.254237,0.166667,0,1,0
+# class 3
+0.111111,-0.583333,0.355932,0.5,0,0,1
+
+To do
+-----
+
+-Add hyperbolic tangent activation function
+-Add predict function (rather than passing test csv file)
+
+Bugs and suggestions
+--------------------
+
+timnugent@gmail.com
+
+
+References
+----------
+
+Based on code by Bobby Anguelov
+
+http://takinginitiative.wordpress.com/2008/04/23/basic-neural-network-tutorial-c-implementation-and-source-code/
+
+
+
+
+
+
+
